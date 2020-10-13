@@ -30,15 +30,26 @@ class Calculadora {
                 this.primero = this.primero.substring(0, this.primero.length - 2)
             }
 
+            if (operacion == "÷" && param == "0") {
+                mostrarResultado.text = "No se puede dividir entre 0";
+                this.primero = "";
+                this.segundo = "";
+                this.resultado = 0.0;
+                this.hayOperacion = false;
+                this.operacion = "";
+                this.sePulsoIgual = false;
 
-            if (param == "." && segundo != "" && !segundo.contains(".")) {
-                segundo += param;
+            } else {
+                if (param == "." && segundo != "" && !segundo.contains(".")) {
+                    segundo += param;
 
-                mostrarResultado.text = this.primero + " " + this.operacion + " " + this.segundo
-            } else if (param != ".") {
-                this.segundo += param;
-                mostrarResultado.text = this.primero + " " + this.operacion + " " + this.segundo
+                    mostrarResultado.text = this.primero + " " + this.operacion + " " + this.segundo
+                } else if (param != ".") {
+                    this.segundo += param;
+                    mostrarResultado.text = this.primero + " " + this.operacion + " " + this.segundo
+                }
             }
+
 
         } else if (!hayOperacion && sePulsoIgual) {
             if (param != ".") {
@@ -52,7 +63,8 @@ class Calculadora {
     }
 
     fun operar(mostrarResultado: TextView) {
-        fun Double.roundTo2DecimalPlaces() = BigDecimal(this).setScale(5, BigDecimal.ROUND_HALF_UP).toDouble()
+        fun Double.roundTo2DecimalPlaces() =
+            BigDecimal(this).setScale(5, BigDecimal.ROUND_HALF_UP).toDouble()
 
 
         if (primero != "" && segundo != "") {
@@ -84,19 +96,19 @@ class Calculadora {
 
     fun añadirOperacion(simbolo: String, mostrarResultado: TextView) {
 
-        if (this.hayOperacion && this.primero != ""  && this.segundo != "" ) {
+        if (this.hayOperacion && this.primero != "" && this.segundo != "") {
             operar(mostrarResultado)
             this.operacion = simbolo
             this.hayOperacion = true
             mostrarResultado.text = this.primero + " " + this.operacion
-        }else if (!this.hayOperacion && primero != "" && this.primero != "-"){
+        } else if (!this.hayOperacion && primero != "" && this.primero != "-") {
             this.hayOperacion = true
             this.operacion = simbolo
             mostrarResultado.text = mostrarResultado.text.toString() + " " + this.operacion
-        }else if(!this.hayOperacion && this.primero == "" && simbolo == "-"){
+        } else if (!this.hayOperacion && this.primero == "" && simbolo == "-") {
             this.primero += "-";
             mostrarResultado.text = this.primero
-        }else if (this.hayOperacion && this.primero != ""  && this.segundo == "" ){
+        } else if (this.hayOperacion && this.primero != "" && this.segundo == "") {
             this.operacion = simbolo
             mostrarResultado.text = this.primero + " " + this.operacion
         }
